@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMIÈRE | Collection</title>
+    <style>
+        /* --- ESTILOS GENERALES Y FUENTES --- */
+        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&family=Montserrat:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            color: #111111;
+        }
+
+        /* --- PANTALLA 1: FACHADA TIENDA --- */
+      /* --- PANTALLA 1: FACHADA TIENDA --- */
+#boutique-screen {
+    display: flex; 
+    width: 100vw;
+    height: 100vh;
+    transition: opacity 0.5s ease;
+    position: fixed; /* Necesario para cubrir todo */
+    top: 0;
+    left: 0;
+    z-index: 20; /* Asegura que esté al frente */
+    background: #ffffff; /* Asegura que no se transparente */
+}
+
+        .brand-side {
+            flex: 1;
+            background: #111111;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .brand-side h1 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 3.5rem;
+            letter-spacing: 0.5rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .brand-side p {
+            font-size: 0.8rem;
+            letter-spacing: 0.3rem;
+            text-transform: uppercase;
+            color: #888888;
+        }
+
+        .login-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 10% 8%;
+            background: #fcfcfc;
+        }
+
+        .login-side h2 {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .input-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+            margin-bottom: 0.5rem;
+            color: #666666;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem 0;
+            border: none;
+            border-bottom: 1px solid #cccccc;
+            background: transparent;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus {
+            border-bottom-color: #111111;
+        }
+
+        .boutique-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #111111;
+            color: #ffffff;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 0.15rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        /* --- EFECTO CRASH INTENSO --- */
+        #crash-overlay {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            z-index: 999;
+            color: #ff0000;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            font-size: 1.2rem;
+            line-height: 1.2;
+            overflow: hidden;
+            word-wrap: break-word;
+        }
+
+        .glitch-active {
+            animation: intenseShake 0.1s infinite;
+        }
+
+        @keyframes intenseShake {
+            0% { transform: translate(2px, 1px) rotate(0deg); filter: invert(0%); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); filter: invert(20%); }
+            40% { transform: translate(1px, -1px) rotate(-1deg); filter: invert(0%); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); filter: invert(100%); background: #ff0000; color: #000; }
+            80% { transform: translate(2px, -1px) rotate(1deg); filter: invert(0%); background: #000; color: #ff0000; }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        /* --- TRANSICIÓN PUNTOS SUSPENSIVOS --- */
+        #transition-screen {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000;
+            z-index: 998;
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 3rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* --- PANTALLA 2: EL ESCENARIO RPG --- */
+     /* Asegura que el contenedor principal ocupe todo */
+#void-screen {
+    display: none;
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    
+    /* Fondo negro sólido para que no se vea el "hueco" */
+    background-color: #000000;
+    
+    /* Usamos 'contain' para que la imagen no se recorte y se vea entera */
+    /* Pero añadimos un poco de 'padding' visual o escalado */
+    background-image: url('img/fondo.gif');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 85% 85%; /* ¡Aquí está el truco! Reduce el tamaño al 85% */
+    
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ELIMINA o comenta la sección de #lake-canvas si ya no lo quieres */
+
+        
+        /* --- INTERFAZ RPG --- */
+        .game-container {
+            position: absolute;
+            top: 35%;
+            transform: translateY(-50%);
+            z-index: 12;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+       .retro-title {
+    color: #ffffff; /* O prueba con #f7c25c si quieres un toque dorado */
+    text-shadow: 2px 2px 4px #000000; /* Esto le pone un borde negro a la letra para que destaque */
+}
+        .btn-choice-container {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            max-width: 400px;
+            margin: 0 auto;
+            position: relative;
+            height: 60px;
+        }
+
+        .retro-btn {
+            background: #000000;
+            border: 3px solid #ffffff;
+            color: #ffffff;
+            padding: 0.8rem 2.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 4px 4px 0px #824716;
+            height: 50px;
+        }
+
+        .retro-btn:hover {
+            background: #ffffff;
+            color: #000000;
+            box-shadow: 4px 4px 0px #f7c25c;
+        }
+
+        #btn-no {
+            position: absolute;
+            transition: all 0.12s ease;
+        }
+
+        /* --- CUADRO DE DIÁLOGO --- */
+     /* --- CUADRO DE DIÁLOGO --- */
+.dialogue-box {
+    display: none;
+    position: absolute; /* Cambiamos a absolute para controlarlo mejor */
+    bottom: 5%;         /* Lo pegamos a la parte inferior (puedes cambiarlo a 10% si quieres más espacio) */
+    left: 50%;          /* Centrado horizontal */
+    transform: translateX(-50%); /* Ajuste fino para centrado perfecto */
+    z-index: 12;
+    width: 90%;         /* Un poco más ancho para que se vea más cómodo */
+    max-width: 850px;
+    border: 6px solid #ffffff;
+    background: #000000;
+    padding: 2.2rem;
+    min-height: 200px;  /* Ajustado para ser un poco más compacto */
+    text-align: left;
+    cursor: pointer;
+    box-shadow: 0px 0px 0px 4px #000000 inset, 0px 10px 30px rgba(0,0,0,0.8);
+}
+
+        .dialogue-layout {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .avatar-display {
+            display: none;
+            width: 150px;      
+            height: 180px;     
+            border: 4px solid #ffffff;
+            object-fit: cover;
+            background: #111;
+            box-shadow: 0 0 10px rgba(247, 194, 92, 0.4);
+        }
+
+        .dialogue-text {
+    color: #ffffff; /* Texto blanco */
+    text-shadow: 1px 1px 2px #000000; /* Sombra sutil para que se lea sobre cualquier imagen */
+}
+
+        .blink-arrow {
+            position: absolute;
+            bottom: 12px;
+            right: 20px;
+            font-size: 1.2rem;
+            animation: blink 0.8s infinite;
+            display: none;
+            color: #f7c25c;
+        }
+
+        /* --- ELECCIÓN DE REGALOS --- */
+        .gift-container {
+            display: none;
+            position: absolute;
+            top: 35%;
+            transform: translateY(-50%);
+            z-index: 12;
+            width: 100%;
+            max-width: 550px;
+            text-align: center;
+        }
+
+        .gift-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .gift-btn {
+            background: #000000;
+            border: 3px solid #f7c25c;
+            color: #f7c25c;
+            padding: 1.2rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            padding-left: 2rem;
+            box-shadow: 4px 4px 0px #824716;
+        }
+
+        .gift-btn:hover {
+            background: #f7c25c;
+            color: #000000;
+            box-shadow: 0 0 20px #f7c25c;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="audio/his_theme.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="crash-overlay"></div>
+    
+    <div id="transition-screen">
+        <span id="transition-dots"></span>
+    </div>
+
+    <div id="boutique-screen">
+        <div class="brand-side">
+            <h1>Lumière</h1>
+            <p>Collection d'Automne 2026</p>
+        </div>
+        <div class="login-side">
+            <h2>Acceso Clientes</h2>
+            <div class="input-group">
+                <label for="username">Nombre Completo</label>
+                <input type="text" id="username" placeholder="Ej. Ana Martínez" autocomplete="off">
+            </div>
+            <div class="input-group">
+                <label for="access-code">Código de Invitación</label>
+                <input type="password" id="access-code" placeholder="••••••••">
+            </div>
+            <button class="boutique-btn" onclick="triggerCrash()">Ingresar</button>
+        </div>
+    </div>
+
+    <div id="void-screen">
+
+        <div class="game-container" id="confirmation-stage">
+            <div class="retro-title">* El entorno se ha estabilizado... <br>¿Eres verdaderamente Jimena Guzmán Cedeño?</div>
+            <div class="btn-choice-container">
+                <button class="retro-btn" onclick="advanceConfirmation()">SÍ</button>
+                <button class="retro-btn" id="btn-no" onmouseover="dodgeButton()" onclick="dodgeButton()">NO</button>
+            </div>
+        </div>
+
+        <div class="dialogue-box" id="dialogue-stage" onclick="nextDialogue()">
+            <div class="dialogue-layout">
+                <img id="dialogue-avatar" class="avatar-display" src="" alt="Jimena">
+                <div class="dialogue-text" id="dialogue-text"></div>
+            </div>
+            <div class="blink-arrow" id="arrow">▼</div>
+        </div>
+
+        <div class="gift-container" id="gift-stage">
+            <div class="retro-title" style="color: #f7c25c; font-size: 1.3rem;">* Tu travesía por este reflejo ha terminado. Es hora de recibir lo que cosechaste.</div>
+            <div class="gift-options">
+                <button class="gift-btn" onclick="selectGift('la Caja Sorpresa')">* Opción 1: La Caja Sorpresa</button>
+                <button class="gift-btn" onclick="selectGift('el Collar Elegante')">* Opción 2: El Collar Elegante</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- AUDIO ENGINE ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playTorielBeep() {
+            if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(300 + (Math.random() * 10), audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.08);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.08);
+        }
+
+        function playHarshGlitch() {
+            if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(100 + Math.random() * 1000, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        // --- DIÁLOGOS PROFUNDOS ---
+        const dialogues = [
+            { text: "* Cierra los ojos un instante. Respira.", image: 0 },
+            { text: "* Deja que la presión de los exámenes, las horas robadas al sueño y la prisa del mundo exterior se disuelvan en esta luz cálida.", image: 0 },
+            { text: "* Si miramos a través de este horizonte, podemos ver con claridad el principio de tu camino.", image: 0 },
+            { text: "* Ahí está ella. Una niña pequeña, envuelta en una felicidad transparente y genuina.", image: 1 },
+            { text: "* Custodiando en su mirada una nobleza inmensa... esa misma nobleza que, a pesar de las tormentas, jamás permitiste que el mundo te arrebatara.", image: 1 },
+            { text: "* El trayecto hasta aquí no fue sencillo. A menudo, el esfuerzo más grande es el que nadie ve.", image: 0 },
+            { text: "* Pero tú no te rendiste. Aceptaste las complicaciones y los retos armándote de una resistencia silenciosa y admirable.", image: 2 },
+            { text: "* Mírate ahora. Estás cruzando el umbral de tu graduación.", image: 2 },
+            { text: "* Todo lo que sembraste con lágrimas, paciencia y dedicación, hoy finalmente empieza a dar frutos reales.", image: 2 },
+            { text: "* Has dejado una huella imborrable en quienes te conocen de verdad. Y hoy, todos estamos profundamente orgullosos de la mujer en la que te has convertido.", image: 0 },
+            { text: "* El final de esta etapa es solo el comienzo de tu cosecha. No hay más acertijos, ni más miedos que te detengan.", image: 0 },
+            { text: "* Has llegado a la meta, Jimena. Es hora de descubrir lo que te aguarda.", image: 0 }
+        ];
+        
+        let currentDialogueIndex = 0;
+        let isTyping = false;
+        let typingTimeout;
+
+        // --- SISTEMA DE CRASHEO ESPANTOSO ---
+        function triggerCrash() {
+            const nameInput = document.getElementById('username').value.trim().toLowerCase();
+            const cleanName = nameInput.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            
+            if (cleanName.includes("jimena") && cleanName.includes("guzman")) {
+                const overlay = document.getElementById('crash-overlay');
+                overlay.style.display = 'block';
+                document.body.classList.add('glitch-active');
+                
+                let crashInterval = setInterval(() => {
+                    playHarshGlitch();
+                    let garbage = "";
+                    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+{}|:<>?~`¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿×÷";
+                    for(let i=0; i<300; i++) garbage += chars.charAt(Math.floor(Math.random() * chars.length));
+                    overlay.innerText = "FATAL ERROR. OVERRIDE DETECTED. \n" + garbage;
+                }, 80);
+
+                // Termina el glitch y pasa a pantalla negra con puntos
+                setTimeout(() => {
+                    clearInterval(crashInterval);
+                    document.body.classList.remove('glitch-active');
+                    overlay.style.display = 'none';
+                    document.getElementById('boutique-screen').style.display = 'none';
+                    
+                    const transitionScreen = document.getElementById('transition-screen');
+                    transitionScreen.style.display = 'flex';
+                    const dots = document.getElementById('transition-dots');
+                    
+                    // Animación de los puntos suspensivos
+                    setTimeout(() => dots.innerText = ".", 1000);
+                    setTimeout(() => dots.innerText = "..", 2000);
+                    setTimeout(() => dots.innerText = "...", 3000);
+                    
+                    // Carga el paisaje
+                    setTimeout(() => {
+    clearInterval(crashInterval);
+    document.body.classList.remove('glitch-active');
+    overlay.style.display = 'none';
+
+    // 1. Ocultar la boutique completamente
+    const boutique = document.getElementById('boutique-screen');
+    boutique.style.display = 'none';
+    
+    // 2. Mostrar la pantalla de transición
+    const transitionScreen = document.getElementById('transition-screen');
+    transitionScreen.style.display = 'flex';
+    
+    // ... tu lógica de puntos ...
+    
+    setTimeout(() => {
+        transitionScreen.style.display = 'none';
+        // 3. Mostrar el void-screen
+        document.getElementById('void-screen').style.display = 'flex';
+    }, 5000);
+}, 4000);
+
+                }, 4000); // 4 segundos de terror puro
+            } else {
+                alert("Acceso denegado. Verifique sus credenciales de invitación.");
+            }
+        }
+
+        // --- INTERFAZ RPG ---
+        function dodgeButton() {
+            const noBtn = document.getElementById('btn-no');
+            const randomX = Math.floor(Math.random() * (window.innerWidth - 160)) - (window.innerWidth / 3);
+            const randomY = Math.floor(Math.random() * (window.innerHeight - 100)) - (window.innerHeight / 3);
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+            
+            const music = document.getElementById('bg-music');
+            music.volume = 0.15;
+            music.play().catch(e => console.log("Interacción requerida para audio"));
+        }
+
+        function advanceConfirmation() {
+            document.getElementById('confirmation-stage').style.display = 'none';
+            document.getElementById('dialogue-stage').style.display = 'block';
+            
+            const music = document.getElementById('bg-music');
+            music.volume = 0.15;
+            music.play().catch(e => console.log("Interacción requerida para audio"));
+            startDialogue();
+        }
+
+        function startDialogue() {
+            currentDialogueIndex = 0;
+            typeText(dialogues[currentDialogueIndex]);
+        }
+
+        function typeText(dialogueObj) {
+            isTyping = true;
+            document.getElementById('arrow').style.display = 'none';
+            
+            const avatar = document.getElementById('dialogue-avatar');
+            if (dialogueObj.image === 1) {
+                avatar.src = "img/Jimena_nina.jpeg";
+                avatar.style.display = "block";
+            } else if (dialogueObj.image === 2) {
+                avatar.src = "img/Jimena_ahorita.jpeg";
+                avatar.style.display = "block";
+            } else {
+                avatar.style.display = "none";
+            }
+
+            const textContainer = document.getElementById('dialogue-text');
+            textContainer.innerHTML = '';
+            
+            let charIndex = 0;
+            let currentHTML = '';
+            let rawText = dialogueObj.text;
+
+            function typeChar() {
+                if (charIndex < rawText.length) {
+                    const char = rawText.charAt(charIndex);
+                    currentHTML += char;
+                    textContainer.innerHTML = currentHTML;
+                    let delay = 40;
+                    
+                    if (char === '.' || char === '?' || char === '!') delay = 400;
+                    else if (char === ',') delay = 180;
+                    else if (char !== ' ') playTorielBeep();
+                    
+                    charIndex++;
+                    typingTimeout = setTimeout(typeChar, delay);
+                } else {
+                    isTyping = false;
+                    document.getElementById('arrow').style.display = 'block';
+                }
+            }
+            typeChar();
+        }
+
+        function nextDialogue() {
+            if (isTyping) {
+                clearTimeout(typingTimeout);
+                document.getElementById('dialogue-text').innerHTML = dialogues[currentDialogueIndex].text;
+                isTyping = false;
+                document.getElementById('arrow').style.display = 'block';
+                return;
+            }
+
+            currentDialogueIndex++;
+            if (currentDialogueIndex < dialogues.length) {
+                typeText(dialogues[currentDialogueIndex]);
+            } else {
+                document.getElementById('dialogue-stage').style.display = 'none';
+                document.getElementById('gift-stage').style.display = 'block';
+            }
+        }
+
+        function selectGift(choiceName) {
+            alert(`* ¿Has elegido ${choiceName}?...\n\n* Después de todo tu esfuerzo académico y personal... ¡Te mereces absolutamente las DOS cosas! ♥`);
+        }
+
+        // --- PAISAJE 8-BIT MEJORADO (ATARDECER/AMANECER) ---
+      
+    </script>
+</body>
+</html>

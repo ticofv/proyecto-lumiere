@@ -2,612 +2,1066 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>LUMIÈRE | Collection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMIÈRE | Collection Privée</title>
     <style>
-        /* --- ESTILOS GENERALES Y FUENTES --- */
-        @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&family=Montserrat:wght@300;400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;0,6..96,700;1,6..96,300;1,6..96,400&family=Montserrat:wght@200;300;400;500;600&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+    @font-face {
+        font-family: 'Pixel';
+        src: url('fonts/8bit.ttf') format('truetype');
+        font-display: block;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --noir:    #0d0d0d;
+        --blanc:   #f7f3ee;
+        --or:      #c8a96e;
+        --or-pale: #e2cfab;
+        --gris:    #888;
+    }
+
+    html, body {
+        width: 100%; height: 100%;
+        overflow: hidden;
+        font-family: 'Montserrat', sans-serif;
+        background: var(--noir);
+    }
+
+    /* ═══════════════════════════════════════════
+       BOUTIQUE — PANTALLA 1
+    ═══════════════════════════════════════════ */
+    #boutique-screen {
+        position: fixed; inset: 0; z-index: 20;
+        display: flex; flex-direction: column;
+        background: var(--blanc);
+    }
+
+    /* NAV */
+    .bq-nav {
+        position: absolute; top: 0; left: 0; right: 0; z-index: 30;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 22px 52px;
+    }
+    .bq-nav-links, .bq-nav-right { display: flex; gap: 28px; }
+    .bq-nav-links a, .bq-nav-right a {
+        font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase;
+        text-decoration: none; color: rgba(255,255,255,0.55); font-weight: 500;
+        transition: color 0.3s;
+    }
+    .bq-nav-links a:hover, .bq-nav-right a:hover { color: #fff; }
+    .bq-nav-logo {
+        font-family: 'Bodoni Moda', serif; font-size: 1.5rem;
+        letter-spacing: 12px; color: #fff; text-transform: uppercase;
+        pointer-events: none;
+    }
+
+    /* SPLIT */
+    .bq-split { display: flex; width: 100%; height: 100%; }
+
+    /* LEFT — Brand panel */
+    .bq-brand {
+        flex: 1.15; background: var(--noir);
+        position: relative; overflow: hidden;
+        display: flex; flex-direction: column;
+        justify-content: flex-end; padding: 64px 56px;
+    }
+
+    /* Watermark ghost */
+    .bq-brand::before {
+        content: 'LM';
+        position: absolute; top: 50%; left: 50%;
+        transform: translate(-50%, -50%) rotate(-12deg);
+        font-family: 'Bodoni Moda', serif; font-size: 22rem;
+        color: rgba(255,255,255,0.025); font-weight: 700;
+        pointer-events: none; white-space: nowrap; line-height: 1;
+    }
+
+    /* Gold horizontal rule at bottom */
+    .bq-brand::after {
+        content: '';
+        position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+        background: linear-gradient(90deg, transparent, var(--or), transparent);
+    }
+
+    /* Thin vertical accent line */
+    .bq-vline {
+        position: absolute; top: 110px; bottom: 64px; left: 56px;
+        width: 1px;
+        background: linear-gradient(180deg, transparent, var(--or) 25%, var(--or) 75%, transparent);
+        opacity: 0.35;
+    }
+
+    /* Season number top-right */
+    .bq-season {
+        position: absolute; top: 120px; right: 44px;
+        font-family: 'Bodoni Moda', serif; font-size: 9rem;
+        color: rgba(255,255,255,0.04); font-weight: 700;
+        line-height: 1; pointer-events: none; user-select: none;
+    }
+
+    /* Stacked product swatches */
+    .bq-swatches {
+        position: absolute; top: 110px; right: 0;
+        display: flex; flex-direction: column; gap: 1px;
+    }
+    .bq-swatch {
+        width: 70px; height: 70px;
+        border-left: 1px solid rgba(255,255,255,0.08);
+    }
+    .bq-swatch:nth-child(1) { background: #1c1008; }
+    .bq-swatch:nth-child(2) { background: #0f1418; }
+    .bq-swatch:nth-child(3) { background: #1a150c; }
+    .bq-swatch:nth-child(4) { background: #0d0d12; }
+
+    .bq-brand-content { position: relative; z-index: 2; }
+    .bq-eyebrow {
+        font-size: 0.58rem; letter-spacing: 5px; text-transform: uppercase;
+        color: var(--or); margin-bottom: 14px; font-weight: 400;
+    }
+    .bq-name {
+        font-family: 'Bodoni Moda', serif;
+        font-size: 5.5rem; font-weight: 300;
+        color: #fff; line-height: 0.92;
+        letter-spacing: -2px; margin-bottom: 28px;
+    }
+    .bq-name em { font-style: italic; color: var(--or-pale); }
+    .bq-tagline {
+        font-size: 0.68rem; letter-spacing: 3.5px;
+        text-transform: uppercase; color: rgba(255,255,255,0.3);
+        max-width: 260px; line-height: 2.2; font-weight: 300;
+    }
+
+    /* RIGHT — Login panel */
+    .bq-login {
+        flex: 0.85; background: var(--blanc);
+        display: flex; flex-direction: column; justify-content: center;
+        padding: 80px 60px; position: relative; overflow-y: auto;
+    }
+    .bq-login::before {
+        content: '';
+        position: absolute; top: 80px; bottom: 80px; left: 0;
+        width: 1px;
+        background: linear-gradient(180deg, transparent, #d8d0c4 20%, #d8d0c4 80%, transparent);
+    }
+
+    .bq-form-head { margin-bottom: 44px; }
+    .bq-form-eyebrow {
+        font-size: 0.58rem; letter-spacing: 4px;
+        text-transform: uppercase; color: var(--or);
+        margin-bottom: 10px; font-weight: 500;
+    }
+    .bq-form-title {
+        font-family: 'Bodoni Moda', serif; font-size: 2.4rem;
+        font-weight: 400; color: var(--noir); letter-spacing: 1px;
+    }
+    .bq-form-sub {
+        margin-top: 8px; font-size: 0.73rem;
+        color: #aaa; font-weight: 300; letter-spacing: 0.5px;
+    }
+
+    /* Field */
+    .bq-field { margin-bottom: 30px; position: relative; }
+    .bq-field label {
+        display: block; font-size: 0.58rem;
+        letter-spacing: 3px; text-transform: uppercase;
+        color: #aaa; font-weight: 600; margin-bottom: 10px;
+    }
+    .bq-field input {
+        width: 100%; padding: 12px 0;
+        background: transparent; border: none;
+        border-bottom: 1px solid #ddd;
+        font-size: 0.92rem; color: var(--noir);
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 300; outline: none;
+        letter-spacing: 0.5px; transition: border-color 0.4s;
+    }
+    .bq-field input::placeholder { color: #ccc; }
+    .bq-field input:focus { border-bottom-color: var(--noir); }
+    /* Gold underline animation */
+    .bq-field::after {
+        content: ''; position: absolute;
+        bottom: 0; left: 0; width: 0; height: 1px;
+        background: var(--or); transition: width 0.4s ease;
+    }
+    .bq-field:focus-within::after { width: 100%; }
+
+    /* Options row */
+    .bq-options {
+        display: flex; justify-content: space-between;
+        align-items: center; margin-bottom: 30px;
+    }
+    .bq-remember {
+        display: flex; align-items: center; gap: 8px;
+        font-size: 0.68rem; color: #aaa; cursor: pointer; letter-spacing: 1px;
+    }
+    .bq-forgot {
+        font-size: 0.68rem; color: var(--or);
+        text-decoration: none; letter-spacing: 1px; transition: color 0.3s;
+    }
+    .bq-forgot:hover { color: var(--noir); }
+
+    /* Buttons */
+    .bq-btn-primary {
+        width: 100%; padding: 17px;
+        background: var(--noir); color: #fff; border: none;
+        font-size: 0.62rem; letter-spacing: 5px;
+        text-transform: uppercase;
+        font-family: 'Montserrat', sans-serif; font-weight: 600;
+        cursor: pointer; margin-bottom: 14px;
+        position: relative; overflow: hidden; transition: background 0.3s;
+    }
+    .bq-btn-primary::after {
+        content: ''; position: absolute; top: 0; left: -100%;
+        width: 100%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(200,169,110,0.25), transparent);
+        transition: left 0.55s;
+    }
+    .bq-btn-primary:hover { background: #1e1e1e; }
+    .bq-btn-primary:hover::after { left: 100%; }
+
+    .bq-btn-secondary {
+        width: 100%; padding: 14px;
+        background: transparent; color: #aaa;
+        border: 1px solid #ddd; font-size: 0.6rem;
+        letter-spacing: 4px; text-transform: uppercase;
+        font-family: 'Montserrat', sans-serif;
+        cursor: pointer; transition: all 0.3s;
+    }
+    .bq-btn-secondary:hover { border-color: var(--noir); color: var(--noir); }
+
+    .bq-legal {
+        margin-top: 28px; font-size: 0.62rem;
+        color: #bbb; text-align: center; line-height: 1.9; letter-spacing: 0.3px;
+    }
+    .bq-legal a { color: var(--or); text-decoration: none; }
+
+    /* ═══════════════════════════════════════════
+       CRASH OVERLAY
+    ═══════════════════════════════════════════ */
+    #crash-overlay {
+        display: none; position: fixed; inset: 0;
+        z-index: 990; background: #000; overflow: hidden;
+    }
+    #crash-canvas {
+        position: absolute; inset: 0; width: 100%; height: 100%;
+    }
+    /* RGB split layers */
+    .glitch-layer {
+        position: absolute; inset: 0;
+        font-family: 'Courier New', monospace;
+        font-size: 0.78rem; line-height: 1.12;
+        padding: 14px; word-break: break-all;
+        white-space: pre-wrap; pointer-events: none;
+    }
+    #gl-red   { color: rgba(255,0,50,0.88); mix-blend-mode: screen; }
+    #gl-green { color: rgba(0,255,80,0.70); mix-blend-mode: screen; }
+    #gl-blue  { color: rgba(0,80,255,0.70); mix-blend-mode: screen; }
+
+    .crash-scanlines {
+        position: absolute; inset: 0; pointer-events: none;
+        background: repeating-linear-gradient(
+            0deg, transparent, transparent 2px,
+            rgba(0,0,0,0.45) 2px, rgba(0,0,0,0.45) 3px
+        );
+        animation: scanRoll 0.06s linear infinite;
+    }
+    @keyframes scanRoll {
+        from { transform: translateY(0); }
+        to   { transform: translateY(3px); }
+    }
+    .crash-vignette {
+        position: absolute; inset: 0; pointer-events: none;
+        background: radial-gradient(ellipse at center, transparent 35%, rgba(200,0,0,0.18) 100%);
+    }
+    .crash-header {
+        position: absolute; top: 16px; left: 16px; z-index: 2;
+        font-family: 'Courier New', monospace; font-size: 1rem;
+        color: #fff; letter-spacing: 1px;
+        text-shadow: 3px 0 #ff0040, -3px 0 #004cff;
+        animation: hdrGlitch 0.14s infinite;
+    }
+    @keyframes hdrGlitch {
+        0%  { text-shadow: 3px 0 #ff0040, -3px 0 #004cff; transform: skewX(0); }
+        25% { text-shadow: -3px 0 #ff0040, 3px 0 #004cff; transform: skewX(-1.5deg); }
+        50% { text-shadow: 5px 0 #ff0040, -5px 0 #004cff; transform: skewX(0); clip-path: inset(30% 0 40% 0); }
+        75% { text-shadow: -2px 0 #ff0040, 2px 0 #004cff; transform: skewX(1deg); clip-path: none; }
+        100%{ text-shadow: 3px 0 #ff0040, -3px 0 #004cff; transform: skewX(0); }
+    }
+
+    /* Body shake during crash */
+    .body-shake { animation: bodyShk 0.07s infinite; }
+    @keyframes bodyShk {
+        0%   { transform: translate(0,0) rotate(0); }
+        25%  { transform: translate(-3px, 1px) rotate(-0.4deg); }
+        50%  { transform: translate(3px, -1px) rotate(0.4deg); }
+        75%  { transform: translate(-2px, 2px) rotate(-0.2deg); }
+        100% { transform: translate(0,0) rotate(0); }
+    }
+
+    /* White flash */
+    #white-flash {
+        display: none; position: fixed; inset: 0;
+        z-index: 1000; background: #fff; pointer-events: none; opacity: 0;
+    }
+
+    /* ═══════════════════════════════════════════
+       TRANSITION SCREEN
+    ═══════════════════════════════════════════ */
+    #transition-screen {
+        display: none; position: fixed; inset: 0;
+        z-index: 995; background: #000;
+        flex-direction: column;
+        justify-content: center; align-items: center; gap: 20px;
+    }
+    .ts-dots {
+        font-family: 'Pixel', 'Courier New', monospace;
+        font-size: 2.2rem; color: #fff;
+        letter-spacing: 10px; min-height: 44px;
+    }
+    .ts-sub {
+        font-family: 'Pixel', 'Courier New', monospace;
+        font-size: 0.5rem; color: rgba(255,255,255,0.2);
+        letter-spacing: 4px; text-transform: uppercase;
+    }
+
+    /* ═══════════════════════════════════════════
+       VOID SCREEN
+    ═══════════════════════════════════════════ */
+    #void-screen {
+        display: none; position: fixed; inset: 0; z-index: 10;
+        background: #000 url('img/fondo.gif') no-repeat center center / 85% 85%;
+        flex-direction: column; justify-content: center; align-items: center;
+    }
+    /* Scanlines on void */
+    #void-screen::before {
+        content: ''; position: absolute; inset: 0;
+        background: repeating-linear-gradient(
+            0deg, transparent, transparent 3px,
+            rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 4px
+        );
+        pointer-events: none; z-index: 99;
+    }
+
+    /* ═══════════════════════════════════════════
+       CONFIRMATION STAGE
+    ═══════════════════════════════════════════ */
+    #confirmation-stage {
+        position: absolute; top: 38%; transform: translateY(-50%);
+        z-index: 50; width: 100%; max-width: 660px;
+        text-align: center; padding: 0 24px;
+    }
+    .cf-text {
+        font-family: 'Pixel', 'Courier New', monospace;
+        font-size: 1rem; color: #fff; line-height: 2.4;
+        margin-bottom: 52px;
+        text-shadow: 0 0 24px rgba(255,255,255,0.25);
+    }
+    .cf-buttons {
+        display: flex; justify-content: center;
+        gap: 16px; flex-wrap: wrap; position: relative;
+    }
+    /* The Undertale-style YES buttons */
+    .ut-btn {
+        font-family: 'Pixel', 'Courier New', monospace;
+        font-size: 0.8rem; background: #fff; color: #000;
+        border: none; padding: 13px 26px; cursor: pointer;
+        letter-spacing: 1px; transition: all 0.08s;
+        box-shadow: 4px 4px 0 rgba(255,255,255,0.25);
+    }
+    .ut-btn::before { content: '❤ '; color: #e74c3c; }
+    .ut-btn:hover {
+        background: #ffee58; color: #000;
+        transform: translate(-2px, -2px);
+        box-shadow: 6px 6px 0 rgba(255,238,88,0.35);
+    }
+    .ut-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 rgba(255,238,88,0.35); }
+
+    #btn-no {
+        font-family: 'Pixel', 'Courier New', monospace;
+        font-size: 0.8rem; background: transparent;
+        color: #fff; border: 2px solid rgba(255,255,255,0.4);
+        padding: 13px 26px; cursor: not-allowed;
+        letter-spacing: 1px;
+        transition: left 0.12s ease, top 0.12s ease;
+    }
+
+    /* ═══════════════════════════════════════════
+       DIALOGUE BOX — UNDERTALE FAITHFUL
+    ═══════════════════════════════════════════ */
+    #dialogue-stage {
+        display: none; position: absolute;
+        bottom: 18px; left: 50%;
+        transform: translateX(-50%);
+        width: min(860px, calc(100% - 28px));
+        z-index: 50; cursor: pointer; user-select: none;
+    }
+    /* Undertale double-border box */
+    .dlg-outer {
+        background: #fff;
+        border: 5px solid #000;
+        /* The famous double border: white gap → black outer ring */
+        box-shadow: 0 0 0 2px #fff, 0 0 0 6px #000;
+        padding: 18px 24px 14px;
+        position: relative;
+    }
+    .dlg-layout {
+        display: flex; gap: 18px; align-items: flex-start;
+        min-height: 96px;
+    }
+    /* Portrait */
+    .dlg-portrait {
+        display: none;
+        width: 96px; height: 96px; flex-shrink: 0;
+        border: 4px solid #000; overflow: hidden;
+        background: #1a1a1a; image-rendering: pixelated;
+    }
+    .dlg-portrait img {
+        width: 100%; height: 100%;
+        object-fit: cover; image-rendering: pixelated;
+        filter: contrast(1.05) saturate(0.85);
+    }
+    .dlg-text-area { flex: 1; }
+    /* Name tag (black pill above text) */
+    .dlg-nametag {
+        display: none;
+        font-family: 'Pixel', 'Courier New', monospace;
+        font-size: 0.7rem; background: #000; color: #fff;
+        padding: 3px 12px; margin-bottom: 10px;
+        letter-spacing: 2px; width: fit-content;
+    }
+    /* Dialogue text */
+    #dialogue-text {
+        font-family: 'Pixel', 'Courier New', monospace;
+        font-size: 0.82rem; color: #000;
+        line-height: 2; min-height: 72px;
+        white-space: pre-wrap;
+    }
+    /* Continue arrow */
+    .dlg-arrow {
+        display: none; position: absolute;
+        bottom: 10px; right: 18px;
+        font-family: 'Pixel', 'Courier New', monospace;
+        font-size: 0.78rem; color: #000;
+        animation: arrowBlink 0.8s step-end infinite;
+    }
+    @keyframes arrowBlink {
+        0%, 100% { opacity: 1; }
+        50%       { opacity: 0; }
+    }
+
+    /* ═══════════════════════════════════════════
+       GIFT STAGE
+    ═══════════════════════════════════════════ */
+    #gift-stage {
+        display: none; position: absolute;
+        top: 35%; transform: translateY(-50%);
+        z-index: 50; width: 100%; max-width: 600px;
+        text-align: center; padding: 0 24px;
+    }
+    .gift-title {
+        font-family: 'Pixel', 'Courier New', monospace;
+        font-size: 0.9rem; color: #fff; line-height: 2.4;
+        margin-bottom: 48px; white-space: pre-line;
+        text-shadow: 0 0 20px rgba(255,255,255,0.2);
+    }
+    .gift-options { display: flex; gap: 28px; justify-content: center; flex-wrap: wrap; }
+    .gift-btn {
+        font-family: 'Pixel', 'Courier New', monospace;
+        font-size: 0.72rem; background: #000;
+        color: #fff; border: 4px solid #fff;
+        padding: 28px 36px; cursor: pointer;
+        min-width: 210px; text-align: center;
+        box-shadow: 6px 6px 0 rgba(255,255,255,0.18);
+        transition: all 0.08s;
+    }
+    .gift-btn .gift-ico { font-size: 2rem; display: block; margin-bottom: 12px; }
+    .gift-btn:hover {
+        background: #ffee58; color: #000; border-color: #ffee58;
+        box-shadow: 8px 8px 0 rgba(255,238,88,0.3);
+        transform: translate(-2px, -2px);
+    }
+    .gift-btn:active {
+        transform: translate(2px, 2px);
+        box-shadow: 3px 3px 0 rgba(255,238,88,0.3);
+    }
+
+   
+   /* ═══════════════════════════════════════════
+       RESPONSIVE (CORREGIDO FINAL)
+    ═══════════════════════════════════════════ */
+    @media (max-width: 768px) {
+        /* Navegación superior: limpiamos el área */
+        .bq-nav { 
+            padding: 16px 24px; 
+            justify-content: flex-end; /* Mandamos "Mi cuenta" a la derecha */
+        }
+        .bq-nav-links, .bq-nav-logo { 
+            display: none; /* Ocultamos el logo duplicado en móvil para evitar el choque */
         }
 
-        body, html {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            font-family: 'Montserrat', sans-serif;
-            background-color: #ffffff;
-            color: #111111;
+        /* Estructura dividida */
+        .bq-split { 
+            flex-direction: column; 
         }
 
-        /* --- PANTALLA 1: FACHADA TIENDA --- */
-      /* --- PANTALLA 1: FACHADA TIENDA --- */
-#boutique-screen {
-    display: flex; 
-    width: 100vw;
-    height: 100vh;
-    transition: opacity 0.5s ease;
-    position: fixed; /* Necesario para cubrir todo */
-    top: 0;
-    left: 0;
-    z-index: 20; /* Asegura que esté al frente */
-    background: #ffffff; /* Asegura que no se transparente */
-}
-
-        .brand-side {
-            flex: 1;
-            background: #111111;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
+        /* Panel negro (Marca) */
+        .bq-brand { 
+            flex: 0 0 32vh; /* Le damos un poquito más de altura */
+            height: auto; 
+            padding: 60px 24px 20px; /* 60px de relleno superior empujan el texto hacia abajo, lejos del menú */
             justify-content: center;
-            align-items: center;
-            padding: 2rem;
+        }
+        .bq-name { 
+            font-size: 3.2rem; 
+            margin-bottom: 10px;
+        }
+        .bq-brand::before { 
+            font-size: 6rem; 
+        }
+        .bq-swatches, .bq-vline, .bq-season { 
+            display: none; 
         }
 
-        .brand-side h1 {
-            font-family: 'Bodoni Moda', serif;
-            font-size: 3.5rem;
-            letter-spacing: 0.5rem;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
+        /* Panel blanco (Login) */
+        .bq-login { 
+            flex: 1; 
+            height: auto; 
+            padding: 30px 24px; 
+            justify-content: flex-start; 
+            overflow-y: auto; 
         }
-
-        .brand-side p {
-            font-size: 0.8rem;
-            letter-spacing: 0.3rem;
-            text-transform: uppercase;
-            color: #888888;
+        .bq-form-head {
+            margin-bottom: 30px; /* Reducimos un poco el margen para que quepa mejor */
         }
-
-        .login-side {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 10% 8%;
-            background: #fcfcfc;
-        }
-
-        .login-side h2 {
-            font-family: 'Bodoni Moda', serif;
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            font-weight: 400;
-        }
-
-        .input-group {
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1rem;
-            margin-bottom: 0.5rem;
-            color: #666666;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 0.8rem 0;
-            border: none;
-            border-bottom: 1px solid #cccccc;
-            background: transparent;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .input-group input:focus {
-            border-bottom-color: #111111;
-        }
-
-        .boutique-btn {
-            width: 100%;
-            padding: 1rem;
-            background: #111111;
-            color: #ffffff;
-            border: none;
-            text-transform: uppercase;
-            letter-spacing: 0.15rem;
-            font-size: 0.85rem;
-            cursor: pointer;
-        }
-
-        /* --- EFECTO CRASH INTENSO --- */
-        #crash-overlay {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000000;
-            z-index: 999;
-            color: #ff0000;
-            font-family: 'Courier New', monospace;
-            padding: 20px;
-            font-size: 1.2rem;
-            line-height: 1.2;
-            overflow: hidden;
-            word-wrap: break-word;
-        }
-
-        .glitch-active {
-            animation: intenseShake 0.1s infinite;
-        }
-
-        @keyframes intenseShake {
-            0% { transform: translate(2px, 1px) rotate(0deg); filter: invert(0%); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); filter: invert(20%); }
-            40% { transform: translate(1px, -1px) rotate(-1deg); filter: invert(0%); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); filter: invert(100%); background: #ff0000; color: #000; }
-            80% { transform: translate(2px, -1px) rotate(1deg); filter: invert(0%); background: #000; color: #ff0000; }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
-        }
-
-        /* --- TRANSICIÓN PUNTOS SUSPENSIVOS --- */
-        #transition-screen {
-            display: none;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000000;
-            z-index: 998;
-            color: #ffffff;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 3rem;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* --- PANTALLA 2: EL ESCENARIO RPG --- */
-     /* Asegura que el contenedor principal ocupe todo */
-#void-screen {
-    display: none;
-    position: fixed; 
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    
-    /* Fondo negro sólido para que no se vea el "hueco" */
-    background-color: #000000;
-    
-    /* Usamos 'contain' para que la imagen no se recorte y se vea entera */
-    /* Pero añadimos un poco de 'padding' visual o escalado */
-    background-image: url('img/fondo.gif');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 85% 85%; /* ¡Aquí está el truco! Reduce el tamaño al 85% */
-    
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-/* ELIMINA o comenta la sección de #lake-canvas si ya no lo quieres */
-
         
-        /* --- INTERFAZ RPG --- */
-        .game-container {
-            position: absolute;
-            top: 35%;
-            transform: translateY(-50%);
-            z-index: 12;
-            width: 100%;
-            max-width: 600px;
-            text-align: center;
+        /* --- Correcciones para las pantallas de Undertale --- */
+        .cf-text { 
+            font-size: 0.82rem; 
+            margin-bottom: 30px;
         }
-
-       .retro-title {
-    color: #ffffff; /* O prueba con #f7c25c si quieres un toque dorado */
-    text-shadow: 2px 2px 4px #000000; /* Esto le pone un borde negro a la letra para que destaque */
-}
-        .btn-choice-container {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            max-width: 400px;
-            margin: 0 auto;
-            position: relative;
-            height: 60px;
+        #confirmation-stage {
+            top: 50%; 
+            padding: 0 16px;
         }
-
-        .retro-btn {
-            background: #000000;
-            border: 3px solid #ffffff;
-            color: #ffffff;
-            padding: 0.8rem 2.5rem;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.2rem;
-            cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 4px 4px 0px #824716;
-            height: 50px;
+        
+        #dialogue-stage { 
+            bottom: 12px; 
+            width: calc(100% - 24px);
         }
-
-        .retro-btn:hover {
-            background: #ffffff;
-            color: #000000;
-            box-shadow: 4px 4px 0px #f7c25c;
+        .dlg-outer {
+            padding: 14px 16px 12px;
         }
-
-        #btn-no {
-            position: absolute;
-            transition: all 0.12s ease;
+        .dlg-portrait { 
+            width: 60px; 
+            height: 60px; 
+            border-width: 3px;
         }
-
-        /* --- CUADRO DE DIÁLOGO --- */
-     /* --- CUADRO DE DIÁLOGO --- */
-.dialogue-box {
-    display: none;
-    position: absolute; /* Cambiamos a absolute para controlarlo mejor */
-    bottom: 5%;         /* Lo pegamos a la parte inferior (puedes cambiarlo a 10% si quieres más espacio) */
-    left: 50%;          /* Centrado horizontal */
-    transform: translateX(-50%); /* Ajuste fino para centrado perfecto */
-    z-index: 12;
-    width: 90%;         /* Un poco más ancho para que se vea más cómodo */
-    max-width: 850px;
-    border: 6px solid #ffffff;
-    background: #000000;
-    padding: 2.2rem;
-    min-height: 200px;  /* Ajustado para ser un poco más compacto */
-    text-align: left;
-    cursor: pointer;
-    box-shadow: 0px 0px 0px 4px #000000 inset, 0px 10px 30px rgba(0,0,0,0.8);
-}
-
-        .dialogue-layout {
-            display: flex;
-            gap: 2.5rem;
-            align-items: center;
+        #dialogue-text { 
+            font-size: 0.72rem; 
+            min-height: 60px;
         }
-
-        .avatar-display {
-            display: none;
-            width: 150px;      
-            height: 180px;     
-            border: 4px solid #ffffff;
-            object-fit: cover;
-            background: #111;
-            box-shadow: 0 0 10px rgba(247, 194, 92, 0.4);
+        
+        /* Adaptación de la caja de regalos */
+        #gift-stage {
+            top: 50%;
+            padding: 0 16px;
         }
-
-        .dialogue-text {
-    color: #ffffff; /* Texto blanco */
-    text-shadow: 1px 1px 2px #000000; /* Sombra sutil para que se lea sobre cualquier imagen */
-}
-
-        .blink-arrow {
-            position: absolute;
-            bottom: 12px;
-            right: 20px;
-            font-size: 1.2rem;
-            animation: blink 0.8s infinite;
-            display: none;
-            color: #f7c25c;
+        .gift-title {
+            font-size: 0.8rem;
+            margin-bottom: 30px;
+            line-height: 1.8;
         }
-
-        /* --- ELECCIÓN DE REGALOS --- */
-        .gift-container {
-            display: none;
-            position: absolute;
-            top: 35%;
-            transform: translateY(-50%);
-            z-index: 12;
-            width: 100%;
-            max-width: 550px;
-            text-align: center;
-        }
-
         .gift-options {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin-top: 2.5rem;
+            gap: 16px;
+            flex-direction: column; 
         }
-
         .gift-btn {
-            background: #000000;
-            border: 3px solid #f7c25c;
-            color: #f7c25c;
-            padding: 1.2rem;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: left;
-            padding-left: 2rem;
-            box-shadow: 4px 4px 0px #824716;
+            padding: 16px 20px;
+            min-width: 100%;
+            font-size: 0.7rem;
         }
-
-        .gift-btn:hover {
-            background: #f7c25c;
-            color: #000000;
-            box-shadow: 0 0 20px #f7c25c;
+        .gift-btn .gift-ico {
+            margin-bottom: 8px;
+            font-size: 1.5rem;
         }
-
-        @keyframes blink {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
-        }
+    }
     </style>
 </head>
 <body>
 
-    <audio id="bg-music" loop>
-        <source src="audio/his_theme.mp3" type="audio/mpeg">
-    </audio>
+<audio id="bg-music" loop>
+    <source src="audio/his_theme.mp3" type="audio/mpeg">
+</audio>
 
-    <div id="crash-overlay"></div>
-    
-    <div id="transition-screen">
-        <span id="transition-dots"></span>
-    </div>
+<!-- ═══════════════════════════════════════════
+     CRASH OVERLAY
+═══════════════════════════════════════════ -->
+<div id="crash-overlay">
+    <canvas id="crash-canvas"></canvas>
+    <div class="crash-scanlines"></div>
+    <div class="crash-vignette"></div>
+    <div class="glitch-layer" id="gl-red"></div>
+    <div class="glitch-layer" id="gl-green"></div>
+    <div class="glitch-layer" id="gl-blue"></div>
+    <div class="crash-header">FATAL_ERROR :: SYSTEM_OVERRIDE_DETECTED</div>
+</div>
 
-    <div id="boutique-screen">
-        <div class="brand-side">
-            <h1>Lumière</h1>
-            <p>Collection d'Automne 2026</p>
+<div id="white-flash"></div>
+
+<!-- ═══════════════════════════════════════════
+     TRANSITION
+═══════════════════════════════════════════ -->
+<div id="transition-screen">
+    <div class="ts-dots" id="ts-dots"></div>
+    <div class="ts-sub">cargando experiencia...</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     BOUTIQUE — PANTALLA 1
+═══════════════════════════════════════════ -->
+<div id="boutique-screen">
+
+    <nav class="bq-nav">
+        <div class="bq-nav-links">
+            <a href="#">Colecciones</a>
+            <a href="#">Atelier</a>
+            <a href="#">Lookbook</a>
         </div>
-        <div class="login-side">
-            <h2>Acceso Clientes</h2>
-            <div class="input-group">
-                <label for="username">Nombre Completo</label>
-                <input type="text" id="username" placeholder="Ej. Ana Martínez" autocomplete="off">
+        <div class="bq-nav-logo">Lumière</div>
+        <div class="bq-nav-right">
+            <a href="#">Mi Cuenta</a>
+            <a href="#">🛍</a>
+        </div>
+    </nav>
+
+    <div class="bq-split">
+
+        <!-- LEFT: Brand -->
+        <div class="bq-brand">
+            <div class="bq-vline"></div>
+            <div class="bq-season">26</div>
+            <div class="bq-swatches">
+                <div class="bq-swatch"></div>
+                <div class="bq-swatch"></div>
+                <div class="bq-swatch"></div>
+                <div class="bq-swatch"></div>
             </div>
-            <div class="input-group">
+            <div class="bq-brand-content">
+                <div class="bq-eyebrow">Collection Privée · Automne 2026</div>
+                <h1 class="bq-name">Lu<em>miè</em><br>re</h1>
+                <p class="bq-tagline">Acceso exclusivo para clientas selectas de la maison</p>
+            </div>
+        </div>
+
+        <!-- RIGHT: Login -->
+        <div class="bq-login">
+            <div class="bq-form-head">
+                <div class="bq-form-eyebrow">Área Privada</div>
+                <h2 class="bq-form-title">Bienvenida</h2>
+                <p class="bq-form-sub">Ingresa tus datos para acceder a tu cuenta</p>
+            </div>
+
+            <div class="bq-field">
+                <label for="username">Nombre Completo</label>
+                <input type="text" id="username" placeholder="Ej. Sofía Montero" autocomplete="off">
+            </div>
+
+            <div class="bq-field">
                 <label for="access-code">Código de Invitación</label>
                 <input type="password" id="access-code" placeholder="••••••••">
             </div>
-            <button class="boutique-btn" onclick="triggerCrash()">Ingresar</button>
+
+            <div class="bq-options">
+                <label class="bq-remember">
+                    <input type="checkbox"> Recordarme
+                </label>
+                <a href="#" class="bq-forgot">¿Olvidaste tu código?</a>
+            </div>
+
+            <button class="bq-btn-primary" id="login-btn">Ingresar</button>
+            <button class="bq-btn-secondary">Solicitar Invitación</button>
+
+            <p class="bq-legal">
+                Al ingresar aceptas nuestros
+                <a href="#">Términos de uso</a> y
+                <a href="#">Política de privacidad</a> de Lumière Maison.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     VOID SCREEN — PANTALLA 2
+═══════════════════════════════════════════ -->
+<div id="void-screen">
+
+    <!-- Confirmation -->
+    <div id="confirmation-stage">
+        <p class="cf-text" id="cf-text"></p>
+        <div class="cf-buttons" id="cf-buttons">
+            <button class="ut-btn" onclick="handleYes()">Sí</button>
+            <button class="ut-btn" onclick="handleYes()">SÍ</button>
+            <button class="ut-btn" onclick="handleYes()">Sí...</button>
+            <button class="ut-btn" onclick="handleYes()">¡Sí!</button>
+            <button id="btn-no" onmouseover="dodgeNo()" onclick="dodgeNo()">NO</button>
         </div>
     </div>
 
-    <div id="void-screen">
-
-        <div class="game-container" id="confirmation-stage">
-            <div class="retro-title">* El entorno se ha estabilizado... <br>¿Eres verdaderamente Jimena Guzmán Cedeño?</div>
-            <div class="btn-choice-container">
-                <button class="retro-btn" onclick="advanceConfirmation()">SÍ</button>
-                <button class="retro-btn" id="btn-no" onmouseover="dodgeButton()" onclick="dodgeButton()">NO</button>
+    <!-- Dialogue box -->
+    <div id="dialogue-stage" onclick="nextDialogue()">
+        <div class="dlg-outer">
+            <div class="dlg-layout">
+                <div class="dlg-portrait" id="dlg-portrait">
+                    <img id="dlg-img" src="" alt="Jimena">
+                </div>
+                <div class="dlg-text-area">
+                    <div class="dlg-nametag" id="dlg-nametag"></div>
+                    <div id="dialogue-text"></div>
+                </div>
             </div>
-        </div>
-
-        <div class="dialogue-box" id="dialogue-stage" onclick="nextDialogue()">
-            <div class="dialogue-layout">
-                <img id="dialogue-avatar" class="avatar-display" src="" alt="Jimena">
-                <div class="dialogue-text" id="dialogue-text"></div>
-            </div>
-            <div class="blink-arrow" id="arrow">▼</div>
-        </div>
-
-        <div class="gift-container" id="gift-stage">
-            <div class="retro-title" style="color: #f7c25c; font-size: 1.3rem;">* Tu travesía por este reflejo ha terminado. Es hora de recibir lo que cosechaste.</div>
-            <div class="gift-options">
-                <button class="gift-btn" onclick="selectGift('la Caja Sorpresa')">* Opción 1: La Caja Sorpresa</button>
-                <button class="gift-btn" onclick="selectGift('el Collar Elegante')">* Opción 2: El Collar Elegante</button>
-            </div>
+            <div class="dlg-arrow" id="dlg-arrow">▼</div>
         </div>
     </div>
 
-    <script>
-        // --- AUDIO ENGINE ---
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        
-        function playTorielBeep() {
-            if (audioCtx.state === 'suspended') { audioCtx.resume(); }
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(300 + (Math.random() * 10), audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.08);
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.08);
+    <!-- Gift -->
+    <div id="gift-stage">
+        <p class="gift-title">* Tu travesía ha llegado a su fin.¿Cuál de estos regalos quieres llevarte hoy?</p>
+        <div class="gift-options">
+            <button class="gift-btn" onclick="selectGift('la Caja Sorpresa')">
+                <span class="gift-ico">🎁</span>La Caja Sorpresa
+            </button>
+            <button class="gift-btn" onclick="selectGift('el Collar Elegante')">
+                <span class="gift-ico">✨</span>El Collar Elegante
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCRIPT
+═══════════════════════════════════════════ -->
+<script>
+'use strict';
+
+/* ──────────────────────────────────────────
+   AUDIO
+────────────────────────────────────────── */
+let _actx = null;
+function actx() {
+    if (!_actx) _actx = new (window.AudioContext || window.webkitAudioContext)();
+    if (_actx.state === 'suspended') _actx.resume();
+    return _actx;
+}
+
+function beep(charCode) {
+    try {
+        const c   = actx();
+        const osc = c.createOscillator();
+        const g   = c.createGain();
+        // Frequency shifts slightly per character — just like Undertale
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(285 + ((charCode || 65) % 20) * 7, c.currentTime);
+        g.gain.setValueAtTime(0.11, c.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.072);
+        osc.connect(g); g.connect(c.destination);
+        osc.start(); osc.stop(c.currentTime + 0.072);
+    } catch(e) {}
+}
+
+function glitchSound() {
+    try {
+        const c   = actx();
+        const osc = c.createOscillator();
+        const g   = c.createGain();
+        // Distortion curve
+        const curve = new Float32Array(256);
+        for (let i = 0; i < 256; i++) {
+            const x = (i * 2) / 256 - 1;
+            curve[i] = (Math.PI + 350) * x / (Math.PI + 350 * Math.abs(x));
         }
+        const dist = c.createWaveShaper();
+        dist.curve = curve;
+        osc.type = 'sawtooth';
+        const f = 60 + Math.random() * 1400;
+        osc.frequency.setValueAtTime(f, c.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(f * 0.3, c.currentTime + 0.1);
+        g.gain.setValueAtTime(0.22, c.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.1);
+        osc.connect(dist); dist.connect(g); g.connect(c.destination);
+        osc.start(); osc.stop(c.currentTime + 0.1);
+    } catch(e) {}
+}
 
-        function playHarshGlitch() {
-            if (audioCtx.state === 'suspended') { audioCtx.resume(); }
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(100 + Math.random() * 1000, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+/* ──────────────────────────────────────────
+   DIALOGUES
+────────────────────────────────────────── */
+const DIALOGUES = [
+    { text: "* Cierra los ojos un instante.\n\nRespira.", img: 0, name: '' },
+    { text: "* Deja que la presión de los exámenes, las horas robadas al sueño y la prisa del mundo exterior se disuelvan aquí.", img: 0, name: '' },
+    { text: "* Si miramos a través de esta fogata... podemos ver con claridad el principio de tu camino.", img: 0, name: '' },
+    { text: "* Ahí está ella. Una niña pequeña, envuelta en una felicidad transparente y genuina.", img: 1, name: '???' },
+    { text: "* Custodiando en su mirada una nobleza inmensa... esa misma que, a pesar de las tormentas, jamás permitiste que el mundo te arrebatara.", img: 1, name: '???' },
+    { text: "* El trayecto hasta aquí no fue sencillo. A menudo, el esfuerzo más grande es el que nadie ve.", img: 0, name: '' },
+    { text: "* Pero tú no te rendiste. Te armaste de una resistencia silenciosa y verdaderamente admirable.", img: 2, name: 'Jimena' },
+    { text: "* Mírate ahora.\n\nEstás cruzando el umbral de tu graduación.", img: 2, name: 'Jimena' },
+    { text: "* Todo lo que sembraste con lágrimas, paciencia y dedicación... hoy empieza a dar frutos reales.", img: 2, name: 'Jimena' },
+    { text: "* Has dejado una huella imborrable en quienes te conocen de verdad. Y hoy, todos estamos profundamente orgullosos de la mujer en la que te has convertido.", img: 0, name: '' },
+    { text: "* El final de esta etapa es solo el comienzo de tu cosecha.\n\nNo hay más miedos que te detengan.", img: 0, name: '' },
+    { text: "* Has llegado a la meta, Jimena.\n\nEs hora de descubrir lo que te aguarda.", img: 0, name: '❤' }
+];
+
+const CONFIRM_TEXTS = [
+    "* El entorno se ha estabilizado...\n\n¿Eres verdaderamente\nJimena Guzmán Cedeño?",
+    "* Espera...\n\n¿En serio eres tú?\n¿La mismísima Jimena?",
+    "* No puede ser...\n\n¿De verdad, de verdad eres\nJimena Guzmán Cedeño?"
+];
+
+let dlgIdx = 0, isTyping = false, typingTmr;
+let confirmCount = 0;
+
+/* ──────────────────────────────────────────
+   LOGIN — TRIGGER
+────────────────────────────────────────── */
+document.getElementById('login-btn').addEventListener('click', handleLogin);
+document.getElementById('username').addEventListener('keypress', e => {
+    if (e.key === 'Enter') handleLogin();
+});
+
+function norm(s) {
+    return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+}
+
+function handleLogin() {
+    const raw = norm(document.getElementById('username').value);
+    if (raw.includes('jimena') && (raw.includes('guzman') || raw.includes('cedeno'))) {
+        startCrash();
+    } else {
+        const btn = document.getElementById('login-btn');
+        btn.textContent = 'Verificando...';
+        setTimeout(() => {
+            btn.textContent = 'Ingresar';
+            const inp = document.getElementById('username');
+            inp.style.borderBottomColor = '#c0392b';
+            setTimeout(() => inp.style.borderBottomColor = '', 1600);
+        }, 1800);
+    }
+}
+
+/* ──────────────────────────────────────────
+   CRASH
+────────────────────────────────────────── */
+function startCrash() {
+    const overlay = document.getElementById('crash-overlay');
+    const flash   = document.getElementById('white-flash');
+    const CHARS   = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*_+{}|<>?░▒▓█▄▀ÑÄÜÖÉÁÍñ';
+
+    overlay.style.display = 'block';
+    document.body.classList.add('body-shake');
+
+    // Noise canvas
+    const canvas = document.getElementById('crash-canvas');
+    const ctx    = canvas.getContext('2d');
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const crashInt = setInterval(() => {
+        glitchSound();
+
+        // Pixel noise
+        const id = ctx.createImageData(canvas.width, canvas.height);
+        for (let i = 0; i < id.data.length; i += 4) {
+            const v = Math.random() > 0.65 ? Math.floor(Math.random() * 200) : 0;
+            id.data[i]   = v;
+            id.data[i+1] = v * (Math.random() > 0.85 ? 0.4 : 0);
+            id.data[i+2] = v * (Math.random() > 0.9  ? 0.2 : 0);
+            id.data[i+3] = 55;
         }
+        ctx.putImageData(id, 0, 0);
 
-        // --- DIÁLOGOS PROFUNDOS ---
-        const dialogues = [
-            { text: "* Cierra los ojos un instante. Respira.", image: 0 },
-            { text: "* Deja que la presión de los exámenes, las horas robadas al sueño y la prisa del mundo exterior se disuelvan en esta luz cálida.", image: 0 },
-            { text: "* Si miramos a través de este horizonte, podemos ver con claridad el principio de tu camino.", image: 0 },
-            { text: "* Ahí está ella. Una niña pequeña, envuelta en una felicidad transparente y genuina.", image: 1 },
-            { text: "* Custodiando en su mirada una nobleza inmensa... esa misma nobleza que, a pesar de las tormentas, jamás permitiste que el mundo te arrebatara.", image: 1 },
-            { text: "* El trayecto hasta aquí no fue sencillo. A menudo, el esfuerzo más grande es el que nadie ve.", image: 0 },
-            { text: "* Pero tú no te rendiste. Aceptaste las complicaciones y los retos armándote de una resistencia silenciosa y admirable.", image: 2 },
-            { text: "* Mírate ahora. Estás cruzando el umbral de tu graduación.", image: 2 },
-            { text: "* Todo lo que sembraste con lágrimas, paciencia y dedicación, hoy finalmente empieza a dar frutos reales.", image: 2 },
-            { text: "* Has dejado una huella imborrable en quienes te conocen de verdad. Y hoy, todos estamos profundamente orgullosos de la mujer en la que te has convertido.", image: 0 },
-            { text: "* El final de esta etapa es solo el comienzo de tu cosecha. No hay más acertijos, ni más miedos que te detengan.", image: 0 },
-            { text: "* Has llegado a la meta, Jimena. Es hora de descubrir lo que te aguarda.", image: 0 }
-        ];
-        
-        let currentDialogueIndex = 0;
-        let isTyping = false;
-        let typingTimeout;
+        // Text noise for each RGB layer
+        let txt = `FATAL_ERROR :: OVERRIDE_PROTOCOL\nMEMORY_DUMP 0x${Math.floor(Math.random()*0xFFFFFF).toString(16).toUpperCase()}\nSEGFAULT [${Math.floor(Math.random()*999)}] ACCESS_VIOLATION\nNULL_PTR @ 0x${Math.floor(Math.random()*0xFFFFFF).toString(16)}\n\n`;
+        for (let i = 0; i < 420; i++) txt += CHARS[Math.floor(Math.random() * CHARS.length)];
 
-        // --- SISTEMA DE CRASHEO ESPANTOSO ---
-        function triggerCrash() {
-            const nameInput = document.getElementById('username').value.trim().toLowerCase();
-            const cleanName = nameInput.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            
-            if (cleanName.includes("jimena") && cleanName.includes("guzman")) {
-                const overlay = document.getElementById('crash-overlay');
-                overlay.style.display = 'block';
-                document.body.classList.add('glitch-active');
-                
-                let crashInterval = setInterval(() => {
-                    playHarshGlitch();
-                    let garbage = "";
-                    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+{}|:<>?~`¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿×÷";
-                    for(let i=0; i<300; i++) garbage += chars.charAt(Math.floor(Math.random() * chars.length));
-                    overlay.innerText = "FATAL ERROR. OVERRIDE DETECTED. \n" + garbage;
-                }, 80);
+        const red   = document.getElementById('gl-red');
+        const green = document.getElementById('gl-green');
+        const blue  = document.getElementById('gl-blue');
 
-                // Termina el glitch y pasa a pantalla negra con puntos
-                setTimeout(() => {
-                    clearInterval(crashInterval);
-                    document.body.classList.remove('glitch-active');
-                    overlay.style.display = 'none';
-                    document.getElementById('boutique-screen').style.display = 'none';
-                    
-                    const transitionScreen = document.getElementById('transition-screen');
-                    transitionScreen.style.display = 'flex';
-                    const dots = document.getElementById('transition-dots');
-                    
-                    // Animación de los puntos suspensivos
-                    setTimeout(() => dots.innerText = ".", 1000);
-                    setTimeout(() => dots.innerText = "..", 2000);
-                    setTimeout(() => dots.innerText = "...", 3000);
-                    
-                    // Carga el paisaje
-                    setTimeout(() => {
-    clearInterval(crashInterval);
-    document.body.classList.remove('glitch-active');
-    overlay.style.display = 'none';
+        red.textContent   = txt;
+        green.textContent = txt.split('').reverse().join('').slice(0, 340);
+        blue.textContent  = txt;
 
-    // 1. Ocultar la boutique completamente
-    const boutique = document.getElementById('boutique-screen');
-    boutique.style.display = 'none';
-    
-    // 2. Mostrar la pantalla de transición
-    const transitionScreen = document.getElementById('transition-screen');
-    transitionScreen.style.display = 'flex';
-    
-    // ... tu lógica de puntos ...
-    
+        // Animate RGB offsets
+        red.style.transform   = `translate(${-5 + Math.random()*10}px, ${Math.random()*3}px)`;
+        green.style.transform = `translate(${5  + Math.random()*7}px,  ${-2 + Math.random()*5}px)`;
+        blue.style.transform  = `translate(${Math.random()*5}px,  ${4 + Math.random()*5}px)`;
+    }, 65);
+
+    // End crash after 4s
     setTimeout(() => {
-        transitionScreen.style.display = 'none';
-        // 3. Mostrar el void-screen
-        document.getElementById('void-screen').style.display = 'flex';
-    }, 5000);
-}, 4000);
+        clearInterval(crashInt);
+        document.body.classList.remove('body-shake');
+        overlay.style.display = 'none';
+        document.getElementById('boutique-screen').style.display = 'none';
 
-                }, 4000); // 4 segundos de terror puro
-            } else {
-                alert("Acceso denegado. Verifique sus credenciales de invitación.");
-            }
-        }
+        // White flash
+        flash.style.display = 'block';
+        flash.style.transition = 'none';
+        flash.style.opacity = '1';
+        setTimeout(() => {
+            flash.style.transition = 'opacity 0.9s ease';
+            flash.style.opacity = '0';
+            setTimeout(() => flash.style.display = 'none', 900);
+        }, 180);
 
-        // --- INTERFAZ RPG ---
-        function dodgeButton() {
-            const noBtn = document.getElementById('btn-no');
-            const randomX = Math.floor(Math.random() * (window.innerWidth - 160)) - (window.innerWidth / 3);
-            const randomY = Math.floor(Math.random() * (window.innerHeight - 100)) - (window.innerHeight / 3);
-            noBtn.style.left = `${randomX}px`;
-            noBtn.style.top = `${randomY}px`;
-            
-            const music = document.getElementById('bg-music');
-            music.volume = 0.15;
-            music.play().catch(e => console.log("Interacción requerida para audio"));
-        }
+        // Dots transition
+        const ts   = document.getElementById('transition-screen');
+        const dots = document.getElementById('ts-dots');
+        ts.style.display = 'flex';
+        dots.textContent = '';
+        setTimeout(() => dots.textContent = '.',   700);
+        setTimeout(() => dots.textContent = '..',  1500);
+        setTimeout(() => dots.textContent = '...', 2300);
+        setTimeout(() => dots.textContent = '',    3100);
 
-        function advanceConfirmation() {
-            document.getElementById('confirmation-stage').style.display = 'none';
+        setTimeout(() => {
+            ts.style.display = 'none';
+            const vd = document.getElementById('void-screen');
+            vd.style.display = 'flex';
+            showConfirm(0);
+        }, 3900);
+    }, 4000);
+}
+
+/* ──────────────────────────────────────────
+   CONFIRMATION
+────────────────────────────────────────── */
+function showConfirm(round) {
+    const txt = document.getElementById('cf-text');
+    txt.innerHTML = CONFIRM_TEXTS[round].replace(/\n/g, '<br>');
+    txt.style.opacity = '0';
+    txt.style.transition = 'opacity 0.55s ease';
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => { txt.style.opacity = '1'; });
+    });
+    const btns = document.getElementById('cf-buttons');
+    btns.style.opacity = '0';
+    btns.style.transition = 'opacity 0.55s ease 0.25s';
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => { btns.style.opacity = '1'; });
+    });
+}
+
+function handleYes() {
+    beep(115);
+    confirmCount++;
+    const stage = document.getElementById('confirmation-stage');
+    stage.style.transition = 'opacity 0.35s ease';
+    stage.style.opacity = '0';
+
+    setTimeout(() => {
+        if (confirmCount < 3) {
+            showConfirm(Math.min(confirmCount, 2));
+            stage.style.opacity = '1';
+        } else {
+            // Start dialogue
+            stage.style.display = 'none';
             document.getElementById('dialogue-stage').style.display = 'block';
-            
             const music = document.getElementById('bg-music');
-            music.volume = 0.15;
-            music.play().catch(e => console.log("Interacción requerida para audio"));
-            startDialogue();
+            music.volume = 0.16;
+            music.play().catch(() => {});
+            dlgIdx = 0;
+            showDlg(DIALOGUES[0]);
         }
+    }, 380);
+}
 
-        function startDialogue() {
-            currentDialogueIndex = 0;
-            typeText(dialogues[currentDialogueIndex]);
-        }
+function dodgeNo() {
+    const btn = document.getElementById('btn-no');
+    btn.style.position = 'fixed';
+    btn.style.left = Math.floor(Math.random() * (window.innerWidth  - 140)) + 'px';
+    btn.style.top  = Math.floor(Math.random() * (window.innerHeight - 60))  + 'px';
+}
 
-        function typeText(dialogueObj) {
-            isTyping = true;
-            document.getElementById('arrow').style.display = 'none';
-            
-            const avatar = document.getElementById('dialogue-avatar');
-            if (dialogueObj.image === 1) {
-                avatar.src = "img/Jimena_nina.jpeg";
-                avatar.style.display = "block";
-            } else if (dialogueObj.image === 2) {
-                avatar.src = "img/Jimena_ahorita.jpeg";
-                avatar.style.display = "block";
-            } else {
-                avatar.style.display = "none";
+/* ──────────────────────────────────────────
+   DIALOGUE SYSTEM
+────────────────────────────────────────── */
+function showDlg(dlg) {
+    isTyping = true;
+    document.getElementById('dlg-arrow').style.display = 'none';
+
+    // Portrait
+    const portrait = document.getElementById('dlg-portrait');
+    const img      = document.getElementById('dlg-img');
+    if (dlg.img === 1) {
+        img.src = 'img/Jimena_nina.jpeg';
+        portrait.style.display = 'block';
+    } else if (dlg.img === 2) {
+        img.src = 'img/Jimena_ahorita.jpeg';
+        portrait.style.display = 'block';
+    } else {
+        portrait.style.display = 'none';
+    }
+
+    // Nametag
+    const tag = document.getElementById('dlg-nametag');
+    if (dlg.name) { tag.textContent = dlg.name; tag.style.display = 'block'; }
+    else          { tag.style.display = 'none'; }
+
+    // Typewriter
+    const el = document.getElementById('dialogue-text');
+    el.textContent = '';
+    let i = 0, lastBeep = 0;
+    const raw = dlg.text;
+
+    function typeChar() {
+        if (i < raw.length) {
+            el.textContent += raw[i];
+            const c = raw[i], now = Date.now();
+            let delay = 35;
+            if (c === '.' || c === '?' || c === '!') delay = 380;
+            else if (c === ',') delay = 170;
+            else if (c === '\n') delay = 110;
+            if (c !== ' ' && c !== '\n' && now - lastBeep > 48) {
+                beep(raw.charCodeAt(i)); lastBeep = now;
             }
-
-            const textContainer = document.getElementById('dialogue-text');
-            textContainer.innerHTML = '';
-            
-            let charIndex = 0;
-            let currentHTML = '';
-            let rawText = dialogueObj.text;
-
-            function typeChar() {
-                if (charIndex < rawText.length) {
-                    const char = rawText.charAt(charIndex);
-                    currentHTML += char;
-                    textContainer.innerHTML = currentHTML;
-                    let delay = 40;
-                    
-                    if (char === '.' || char === '?' || char === '!') delay = 400;
-                    else if (char === ',') delay = 180;
-                    else if (char !== ' ') playTorielBeep();
-                    
-                    charIndex++;
-                    typingTimeout = setTimeout(typeChar, delay);
-                } else {
-                    isTyping = false;
-                    document.getElementById('arrow').style.display = 'block';
-                }
-            }
-            typeChar();
+            i++;
+            typingTmr = setTimeout(typeChar, delay);
+        } else {
+            isTyping = false;
+            document.getElementById('dlg-arrow').style.display = 'block';
         }
+    }
+    typeChar();
+}
 
-        function nextDialogue() {
-            if (isTyping) {
-                clearTimeout(typingTimeout);
-                document.getElementById('dialogue-text').innerHTML = dialogues[currentDialogueIndex].text;
-                isTyping = false;
-                document.getElementById('arrow').style.display = 'block';
-                return;
-            }
+function nextDialogue() {
+    if (isTyping) {
+        clearTimeout(typingTmr);
+        document.getElementById('dialogue-text').textContent = DIALOGUES[dlgIdx].text;
+        isTyping = false;
+        document.getElementById('dlg-arrow').style.display = 'block';
+        return;
+    }
+    dlgIdx++;
+    if (dlgIdx < DIALOGUES.length) {
+        showDlg(DIALOGUES[dlgIdx]);
+    } else {
+        document.getElementById('dialogue-stage').style.display = 'none';
+        document.getElementById('gift-stage').style.display = 'block';
+    }
+}
 
-            currentDialogueIndex++;
-            if (currentDialogueIndex < dialogues.length) {
-                typeText(dialogues[currentDialogueIndex]);
-            } else {
-                document.getElementById('dialogue-stage').style.display = 'none';
-                document.getElementById('gift-stage').style.display = 'block';
-            }
-        }
-
-        function selectGift(choiceName) {
-            alert(`* ¿Has elegido ${choiceName}?...\n\n* Después de todo tu esfuerzo académico y personal... ¡Te mereces absolutamente las DOS cosas! ♥`);
-        }
-
-        // --- PAISAJE 8-BIT MEJORADO (ATARDECER/AMANECER) ---
-      
-    </script>
+/* ──────────────────────────────────────────
+   GIFT
+────────────────────────────────────────── */
+function selectGift(name) {
+    alert(`* ¿Has elegido ${name}?...\n\n* Después de todo tu esfuerzo académico y personal...\n¡Te mereces absolutamente las DOS cosas! ♥`);
+}
+</script>
 </body>
 </html>
